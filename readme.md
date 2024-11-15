@@ -1,1 +1,1 @@
-# JavaRush M2 Final project grop `NEW`
+# JavaRush M2 Final project group `NEW`
