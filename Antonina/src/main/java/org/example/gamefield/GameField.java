@@ -59,17 +59,17 @@ public class GameField {
         }
 
         public Set<Cell> getNextCells() {
-            if (this.x > 0) {                           // if not left border
-                nextCells.add(cells[x - 1][y]);     // add the next cell on the left
+            if (this.x > 0) {
+                nextCells.add(cells[x - 1][y]);
             }
-            if (this.x < --width) {                     // if not right border
-                nextCells.add(cells[x + 1][y]);     // add the next cell on the right
+            if (this.x < --width) {
+                nextCells.add(cells[x + 1][y]);
             }
-            if (this.y > 0) {                           // if not top border
-                nextCells.add(cells[x][y - 1]);     // add the next cell on the top
+            if (this.y > 0) {
+                nextCells.add(cells[x][y - 1]);
             }
-            if (this.y < --height) {                    // if not bottom border
-                nextCells.add(cells[x][y + 1]);     // add the next cell on the bottom
+            if (this.y < --height) {
+                nextCells.add(cells[x][y + 1]);
             }
             return nextCells;
         }

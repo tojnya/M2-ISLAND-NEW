@@ -1,12 +1,11 @@
 package org.example.entities.animals.predator;
 
-import org.example.entities.animals.Animal;
+public class Snake extends Predator {
 
-public class Wolf extends Predator {
     public static int maxCount = 30;
-    public double weight = 50.0;
-    public double maxFullness = 8.0;
-    public int maxSpeed = 3;
+    public double weight = 15.0;
+    public double maxFullness = 3.0;
+    public int maxSpeed = 1;
 
     @Override
     public void move() {
