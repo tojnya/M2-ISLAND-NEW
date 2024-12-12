@@ -7,14 +7,26 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameField {
-    private Cell[][] cells;
-    private int width;
-    private int height;
+    private static GameField INSTANCE;
+    private static Cell[][] cells;
+    private static int width;
+    private static int height;
 
-    public GameField(int width, int height) {
+    private GameField() {
+    }
+
+    public static GameField getInstance() {
+        if (INSTANCE == null) {
+            return new GameField();
+        }
+        return INSTANCE;
+    }
+
+    public GameField setDimensions(int width, int height) {
         this.width = width;
         this.height = height;
-        initGameField(width, height);
+        initCells(width, height);
+        return INSTANCE;
     }
 
     public int getWidth() {
@@ -29,14 +41,13 @@ public class GameField {
         return cells;
     }
 
-    private Cell[][] initGameField(int width, int height) {
+    private void initCells(int width, int height) {
         cells = new Cell[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 cells[i][j] = new Cell(i, j);
             }
         }
-        return cells;
     }
 
     public class Cell {
@@ -44,6 +55,7 @@ public class GameField {
         private int x;
         private int y;
         private Set<Cell> nextCells = new HashSet<>();
+        private int grass;
 
         public Cell(int x, int y) {
             this.x = x;
@@ -56,6 +68,22 @@ public class GameField {
 
         public int getY() {
             return y;
+        }
+
+        public Map<Class<? extends Animal>, Set<? extends Animal>> getAnimals() {
+            return animals;
+        }
+
+        public void setAnimals(Map<Class<? extends Animal>, Set<? extends Animal>> animals) {
+            this.animals = animals;
+        }
+
+        public int getGrass() {
+            return grass;
+        }
+
+        public void setGrass(int grass) {
+            this.grass = grass;
         }
 
         public Set<Cell> getNextCells() {

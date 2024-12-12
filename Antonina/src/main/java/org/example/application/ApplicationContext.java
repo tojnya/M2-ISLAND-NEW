@@ -1,8 +1,11 @@
 package org.example.application;
 
 import org.example.actions.AnimalSpawner;
+import org.example.actions.GrassSpawner;
 import org.example.actions.Statistics;
 import org.example.gamefield.GameField;
+
+import java.util.concurrent.*;
 
 public class ApplicationContext {
 
@@ -10,6 +13,7 @@ public class ApplicationContext {
     private GameField gameField;
     private Statistics statistics;
     private AnimalSpawner animalSpawner = new AnimalSpawner();
+    private GrassSpawner grassSpawner = new GrassSpawner();
 
     private ApplicationContext() {
     }
@@ -26,7 +30,8 @@ public class ApplicationContext {
     }
 
     public void setGameField(int width, int height) {
-        gameField = new GameField(width, height);
+        gameField = GameField.getInstance();
+        gameField.setDimensions(width, height);
     }
 
     public void startAnimalSpawner() {
@@ -34,6 +39,16 @@ public class ApplicationContext {
         animalSpawnerThread.start();
         try {
             animalSpawnerThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void startGrassSpawner() {
+        Thread grassSpawnerThread = new Thread(grassSpawner);
+        grassSpawnerThread.start();
+        try {
+            grassSpawnerThread.join();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
