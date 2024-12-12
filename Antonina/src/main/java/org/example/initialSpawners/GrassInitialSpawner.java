@@ -1,23 +1,27 @@
-package org.example.actions;
+package org.example.initialSpawners;
 
+import org.example.application.ApplicationContext;
 import org.example.entities.grass.Grass;
 import org.example.gamefield.GameField;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class GrassSpawner implements Runnable {
-    private GameField gameField = GameField.getInstance();
+public class GrassInitialSpawner implements InitialSpawner {
+    private final GameField gameField = ApplicationContext.getInstance().getGameField();
 
     @Override
     public void run() {
+        initialSpawn();
+    }
+
+    public void initialSpawn() {
+        System.out.println("GrassInitialSpawner");
         GameField.Cell[][] cells = gameField.getCells();
         for (int i = 0; i < gameField.getWidth(); i++) {
             for (int j = 0; j < gameField.getHeight(); j++) {
                 int grassCount = ThreadLocalRandom.current().nextInt(0, Grass.maxCount + 1);
                 cells[i][j].setGrass(grassCount);
-                System.out.print(cells[i][j].getX() + "_" + cells[i][j].getY() + ": " + cells[i][j].getGrass() + "🌿\t");
             }
-            System.out.println();
         }
     }
 }

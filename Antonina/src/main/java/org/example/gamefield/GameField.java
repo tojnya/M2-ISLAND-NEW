@@ -1,55 +1,48 @@
 package org.example.gamefield;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.entities.animals.Animal;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+@Getter
 public class GameField {
     private static GameField INSTANCE;
-    private static Cell[][] cells;
-    private static int width;
-    private static int height;
+    private Cell[][] cells;
+    private int width;
+    private int height;
 
-    private GameField() {
+    private GameField(){
     }
 
     public static GameField getInstance() {
-        if (INSTANCE == null) {
-            return new GameField();
+        if (INSTANCE==null) {
+            INSTANCE = new GameField();
         }
         return INSTANCE;
     }
 
-    public GameField setDimensions(int width, int height) {
+    public void initWithDimensions(int width, int height) {
         this.width = width;
         this.height = height;
-        initCells(width, height);
-        return INSTANCE;
+        this.cells = initCells(width, height);
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public Cell[][] getCells() {
-        return cells;
-    }
-
-    private void initCells(int width, int height) {
-        cells = new Cell[width][height];
+    private Cell[][] initCells(int width, int height) {
+        Cell[][] cells = new Cell[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 cells[i][j] = new Cell(i, j);
             }
         }
+        return cells;
     }
 
+    @Getter
+    @Setter
     public class Cell {
         private Map<Class<? extends Animal>, Set<? extends Animal>> animals;
         private int x;
@@ -60,30 +53,6 @@ public class GameField {
         public Cell(int x, int y) {
             this.x = x;
             this.y = y;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public Map<Class<? extends Animal>, Set<? extends Animal>> getAnimals() {
-            return animals;
-        }
-
-        public void setAnimals(Map<Class<? extends Animal>, Set<? extends Animal>> animals) {
-            this.animals = animals;
-        }
-
-        public int getGrass() {
-            return grass;
-        }
-
-        public void setGrass(int grass) {
-            this.grass = grass;
         }
 
         public Set<Cell> getNextCells() {

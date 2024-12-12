@@ -1,7 +1,5 @@
 package org.example.entities.animals.predator;
 
-import org.example.entities.animals.Animal;
-
 public class Wolf extends Predator {
     public static int maxCount = 30;
     public double weight = 50.0;

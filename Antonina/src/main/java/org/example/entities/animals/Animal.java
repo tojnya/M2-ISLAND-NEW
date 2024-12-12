@@ -9,14 +9,11 @@ import org.example.entities.interfaces.Mortal;
 import org.example.entities.interfaces.Movable;
 import org.example.entities.interfaces.Reproducible;
 
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public abstract class Animal implements Movable, Eating, Reproducible, Mortal {
-    private static Set<Class<? extends Animal>> inheritors = initInheritors();
+    private static final Set<Class<? extends Animal>> inheritors = initInheritors();
 
     private static Set<Class<? extends Animal>> initInheritors() {
         Set<Class<? extends Animal>> set = new HashSet<>();

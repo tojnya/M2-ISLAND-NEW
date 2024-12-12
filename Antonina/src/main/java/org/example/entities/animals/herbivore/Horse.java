@@ -1,8 +1,5 @@
 package org.example.entities.animals.herbivore;
 
-import org.example.entities.animals.Animal;
-import org.example.entities.animals.predator.Wolf;
-
 public class Horse extends Herbivore {
     public static int maxCount = 20;
     public double weight = 400.0;

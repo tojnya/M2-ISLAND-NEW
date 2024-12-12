@@ -1,19 +1,19 @@
 package org.example.application;
 
-import org.example.actions.AnimalSpawner;
-import org.example.actions.GrassSpawner;
-import org.example.actions.Statistics;
+import lombok.Getter;
+import org.example.initialSpawners.AnimalInitialSpawner;
+import org.example.initialSpawners.GrassInitialSpawner;
+import org.example.statistics.InitialStatistics;
 import org.example.gamefield.GameField;
 
-import java.util.concurrent.*;
-
+@Getter
 public class ApplicationContext {
 
     private static ApplicationContext INSTANCE;
-    private GameField gameField;
-    private Statistics statistics;
-    private AnimalSpawner animalSpawner = new AnimalSpawner();
-    private GrassSpawner grassSpawner = new GrassSpawner();
+    private final GameField gameField = GameField.getInstance();
+    private GrassInitialSpawner grassSpawner;
+    private AnimalInitialSpawner animalSpawner;
+    private InitialStatistics statistics;
 
     private ApplicationContext() {
     }
@@ -25,32 +25,10 @@ public class ApplicationContext {
         return INSTANCE;
     }
 
-    public GameField getGameField() {
-        return gameField;
-    }
-
-    public void setGameField(int width, int height) {
-        gameField = GameField.getInstance();
-        gameField.setDimensions(width, height);
-    }
-
-    public void startAnimalSpawner() {
-        Thread animalSpawnerThread = new Thread(animalSpawner);
-        animalSpawnerThread.start();
-        try {
-            animalSpawnerThread.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void startGrassSpawner() {
-        Thread grassSpawnerThread = new Thread(grassSpawner);
-        grassSpawnerThread.start();
-        try {
-            grassSpawnerThread.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public void initialize() {
+        this.gameField.initWithDimensions(100, 20);
+        this.grassSpawner = new GrassInitialSpawner();
+        this.animalSpawner = new AnimalInitialSpawner();
+        this.statistics = new InitialStatistics();
     }
 }

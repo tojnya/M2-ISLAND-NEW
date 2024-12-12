@@ -17,9 +17,7 @@ public class ApplicationLoader {
 
     public ApplicationContext load() {
         ApplicationContext context = ApplicationContext.getInstance();
-        context.setGameField(100,20);
-        context.startAnimalSpawner();
-        context.startGrassSpawner();
+        context.initialize();
         return context;
     }
 }
