@@ -1,11 +1,25 @@
 package org.example.entities.animals.predator;
 
-public class Snake extends Predator {
+import org.example.entities.animals.Animal;
+import org.example.settings.AnimalSettings;
 
-    public static int maxCount = 30;
-    public double weight = 15.0;
-    public double maxFullness = 3.0;
-    public int maxSpeed = 1;
+import java.util.Map;
+
+public class Snake extends Predator {
+    private static double weight;
+    private static int maxPerCell;
+    private static int maxSpeed;
+    private static double maxFullness;
+    private static Map<Class<? extends Animal>, Double> chanceOfHunt;
+
+    @Override
+    public void initSettings(AnimalSettings settings) {
+        weight = settings.getWeight();
+        maxPerCell = settings.getMaxPerCell();
+        maxSpeed = settings.getMaxSpeed();
+        maxFullness = settings.getMaxFullness();
+        chanceOfHunt = settings.getChanceOfHunt();
+    }
 
     @Override
     public void move() {

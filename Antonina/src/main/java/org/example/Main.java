@@ -9,7 +9,6 @@ public class Main {
         ApplicationLoader loader = ApplicationLoader.getInstance();
         ApplicationContext context = loader.load();
         GameLoop loop = new GameLoop(context);
-
         Thread thread = new Thread(loop);
         thread.start();
     }

@@ -1,16 +1,19 @@
-package org.example.initialSpawners;
+package org.example.spawners.initialSpawners;
 
 import org.example.application.ApplicationContext;
 import org.example.entities.animals.Animal;
 import org.example.gamefield.GameField;
+import org.example.settings.Settings;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AnimalInitialSpawner implements InitialSpawner {
-    private final static Set<Class<? extends Animal>> animalClasses = Animal.getInheritors();
+    private final static Set<Class<? extends Animal>> animalClasses = Settings.getInstance().getAnimals();
     private final GameField gameField = ApplicationContext.getInstance().getGameField();
 
     @Override
@@ -37,8 +40,13 @@ public class AnimalInitialSpawner implements InitialSpawner {
         Set<Animal> tAnimals = new HashSet<>();
         int animalCount;
         try {
+            Field field = species.getDeclaredField("maxPerCell");
+            int mod = field.getModifiers();
+            if (Modifier.isPrivate(mod)) {
+                field.setAccessible(true);
+            }
             animalCount = ThreadLocalRandom.current().nextInt(0,
-                    species.getDeclaredField("maxCount").getInt(species) + 1);
+                    field.getInt(null) + 1);
         } catch (IllegalAccessException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }

@@ -1,10 +1,25 @@
 package org.example.entities.animals.herbivore;
 
+import org.example.entities.animals.Animal;
+import org.example.settings.AnimalSettings;
+
+import java.util.Map;
+
 public class Horse extends Herbivore {
-    public static int maxCount = 20;
-    public double weight = 400.0;
-    public double maxFullness = 60.0;
-    public int maxSpeed = 4;
+    private static double weight;
+    private static int maxPerCell;
+    private static int maxSpeed;
+    private static double maxFullness;
+    private static Map<Class<? extends Animal>, Double> chanceOfHunt;
+
+    @Override
+    public void initSettings(AnimalSettings settings) {
+        weight = settings.getWeight();
+        maxPerCell = settings.getMaxPerCell();
+        maxSpeed = settings.getMaxSpeed();
+        maxFullness = settings.getMaxFullness();
+        chanceOfHunt = settings.getChanceOfHunt();
+    }
 
     @Override
     public void move() {

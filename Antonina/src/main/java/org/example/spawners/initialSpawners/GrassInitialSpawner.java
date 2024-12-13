@@ -1,4 +1,4 @@
-package org.example.initialSpawners;
+package org.example.spawners.initialSpawners;
 
 import org.example.application.ApplicationContext;
 import org.example.entities.grass.Grass;
