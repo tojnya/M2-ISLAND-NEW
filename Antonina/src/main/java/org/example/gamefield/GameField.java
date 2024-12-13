@@ -2,7 +2,7 @@ package org.example.gamefield;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.entities.animals.Animal;
+import org.example.organisms.animals.Animal;
 
 import java.util.HashSet;
 import java.util.Map;

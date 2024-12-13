@@ -1,19 +1,28 @@
-package org.example.entities.animals.predator;
+package org.example.organisms.animals.herbivore;
 
-import org.example.entities.animals.Animal;
+import lombok.Getter;
+import org.example.organisms.Organism;
 import org.example.settings.AnimalSettings;
 
 import java.util.Map;
 
-public class Snake extends Predator {
+public class Buffalo extends Herbivore {
+    @Getter
+    private static String emoji;
+    @Getter
     private static double weight;
+    @Getter
     private static int maxPerCell;
+    @Getter
     private static int maxSpeed;
+    @Getter
     private static double maxFullness;
-    private static Map<Class<? extends Animal>, Double> chanceOfHunt;
+    @Getter
+    private static Map<Class<? extends Organism>, Double> chanceOfHunt;
 
     @Override
     public void initSettings(AnimalSettings settings) {
+        emoji = settings.getEmoji();
         weight = settings.getWeight();
         maxPerCell = settings.getMaxPerCell();
         maxSpeed = settings.getMaxSpeed();

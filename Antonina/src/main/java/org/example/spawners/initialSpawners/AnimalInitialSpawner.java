@@ -1,7 +1,7 @@
 package org.example.spawners.initialSpawners;
 
 import org.example.application.ApplicationContext;
-import org.example.entities.animals.Animal;
+import org.example.organisms.animals.Animal;
 import org.example.gamefield.GameField;
 import org.example.settings.Settings;
 

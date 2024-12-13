@@ -1,4 +1,4 @@
-package org.example.entities.interfaces;
+package org.example.organisms.interfaces;
 
 import org.example.settings.AnimalSettings;
 

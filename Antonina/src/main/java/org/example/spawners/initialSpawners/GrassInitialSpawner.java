@@ -1,8 +1,8 @@
 package org.example.spawners.initialSpawners;
 
 import org.example.application.ApplicationContext;
-import org.example.entities.grass.Grass;
 import org.example.gamefield.GameField;
+import org.example.organisms.grass.Grass;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -19,7 +19,7 @@ public class GrassInitialSpawner implements InitialSpawner {
         GameField.Cell[][] cells = gameField.getCells();
         for (int i = 0; i < gameField.getWidth(); i++) {
             for (int j = 0; j < gameField.getHeight(); j++) {
-                int grassCount = ThreadLocalRandom.current().nextInt(0, Grass.maxCount + 1);
+                int grassCount = ThreadLocalRandom.current().nextInt(0, Grass.getMaxPerCell() + 1);
                 cells[i][j].setGrass(grassCount);
             }
         }
