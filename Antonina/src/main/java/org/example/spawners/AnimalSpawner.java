@@ -8,6 +8,6 @@ public class AnimalSpawner implements Spawner {
 
     @Override
     public void spawn() {
-        
+
     }
 }

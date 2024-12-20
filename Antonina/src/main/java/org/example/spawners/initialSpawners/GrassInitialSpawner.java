@@ -15,7 +15,6 @@ public class GrassInitialSpawner implements InitialSpawner {
     }
 
     public void initialSpawn() {
-        System.out.println("GrassInitialSpawner");
         GameField.Cell[][] cells = gameField.getCells();
         for (int i = 0; i < gameField.getWidth(); i++) {
             for (int j = 0; j < gameField.getHeight(); j++) {
@@ -23,5 +22,16 @@ public class GrassInitialSpawner implements InitialSpawner {
                 cells[i][j].setGrass(grassCount);
             }
         }
+        aggregate(cells);
+    }
+
+    public void aggregate(GameField.Cell[][] cells) {
+        int allGrass = 0;
+        for (GameField.Cell[] cell : cells) {
+            for (GameField.Cell value : cell) {
+                allGrass += value.getGrass();
+            }
+        }
+        gameField.setAllGrass(allGrass);
     }
 }

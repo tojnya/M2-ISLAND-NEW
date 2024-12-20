@@ -18,7 +18,8 @@ public class GrassSpawner implements Spawner {
                 int prevCount = cells[i][j].getGrass();
                 int spawnCount = ThreadLocalRandom.current().nextInt(0, Grass.getMaxPerCell() - prevCount + 1);
                 cells[i][j].setGrass(prevCount + spawnCount);
-                System.out.print(spawnCount + ", ");
+                int allGrass = gameField.getAllGrass();
+                gameField.setAllGrass(allGrass + spawnCount);
             }
         }
     }

@@ -23,21 +23,54 @@ public class AnimalInitialSpawner implements InitialSpawner {
 
     @Override
     public void initialSpawn() {
-        System.out.println("AnimalInitialSpawner");
         GameField.Cell[][] cells = gameField.getCells();
         for (int i = 0; i < gameField.getWidth(); i++) {
             for (int j = 0; j < gameField.getHeight(); j++) {
-                Map<Class<? extends Animal>, Set<? extends Animal>> cellAnimals = new HashMap<>();
+                Map<Class<? extends Animal>, Set<Animal>> cellAnimals = new HashMap<>();
                 for (Class<? extends Animal> animalClass : animalClasses) {
-                    cellAnimals.put(animalClass, spawnOfClass(animalClass));
+                    cellAnimals.put(animalClass, spawnOfClass(animalClass, i, j));
                 }
                 cells[i][j].setAnimals(cellAnimals);
             }
         }
+        aggregate(cells);
     }
 
-    public Set<Animal> spawnOfClass(Class<? extends Animal> species) {
+    private Set<Animal> spawnOfClass(Class<? extends Animal> species, int x, int y) {
         Set<Animal> tAnimals = new HashSet<>();
+
+        try {
+            Constructor<?> constructor = species.getConstructor();
+            for (int i = 0; i < getMaxPerCellValue(species); i++) {
+                Animal animal = (Animal) constructor.newInstance();
+                animal.assignCoordinates(x, y);
+                tAnimals.add(animal);
+            }
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+        return tAnimals;
+    }
+
+    public void aggregate(GameField.Cell[][] cells) {
+        Map<Class<? extends Animal>, Set<Animal>> allAnimals = new HashMap<>();
+        for (GameField.Cell[] cell : cells) {
+            for (GameField.Cell value : cell) {
+                Map<Class<? extends Animal>, Set<Animal>> animalsOnCell = value.getAnimals();
+
+                for (Map.Entry<Class<? extends Animal>, Set<Animal>> entry : animalsOnCell.entrySet()) {
+                    Class<? extends Animal> animalClass = entry.getKey();
+                    Set<? extends Animal> animalSet = entry.getValue();
+
+                    allAnimals.computeIfAbsent(animalClass, _ -> new HashSet<>()).addAll(animalSet);
+                }
+            }
+        }
+        gameField.setAllAnimals(allAnimals);
+    }
+
+    private int getMaxPerCellValue(Class<? extends Animal> species) {
         int animalCount;
         try {
             Field field = species.getDeclaredField("maxPerCell");
@@ -50,17 +83,6 @@ public class AnimalInitialSpawner implements InitialSpawner {
         } catch (IllegalAccessException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
-
-        try {
-            Constructor<?> constructor = species.getConstructor();
-            for (int i = 0; i < animalCount; i++) {
-                Animal animal = (Animal) constructor.newInstance();
-                tAnimals.add(animal);
-            }
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
-                 InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-        return tAnimals;
+        return animalCount;
     }
 }

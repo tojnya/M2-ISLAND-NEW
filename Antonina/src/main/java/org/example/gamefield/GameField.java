@@ -9,17 +9,20 @@ import java.util.Map;
 import java.util.Set;
 
 @Getter
+@Setter
 public class GameField {
     private static GameField INSTANCE;
     private Cell[][] cells;
     private int width;
     private int height;
+    private Map<Class<? extends Animal>, Set<Animal>> allAnimals;
+    private int allGrass;
 
-    private GameField(){
+    private GameField() {
     }
 
     public static GameField getInstance() {
-        if (INSTANCE==null) {
+        if (INSTANCE == null) {
             INSTANCE = new GameField();
         }
         return INSTANCE;
@@ -44,7 +47,7 @@ public class GameField {
     @Getter
     @Setter
     public class Cell {
-        private Map<Class<? extends Animal>, Set<? extends Animal>> animals;
+        private Map<Class<? extends Animal>, Set<Animal>> animals;
         private int x;
         private int y;
         private Set<Cell> nextCells = new HashSet<>();

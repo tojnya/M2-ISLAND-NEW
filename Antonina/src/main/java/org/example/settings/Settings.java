@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.organisms.animals.Animal;
 import org.example.organisms.animals.herbivore.*;
+import org.example.organisms.animals.omnivore.Boar;
+import org.example.organisms.animals.omnivore.Duck;
+import org.example.organisms.animals.omnivore.Mouse;
 import org.example.organisms.animals.predator.*;
 import org.example.organisms.grass.Grass;
 
@@ -19,6 +22,8 @@ public class Settings {
     private int gameFieldHeight;
     private double grassWeight;
     private int grassMaxPerCell;
+    private double costOfAnimalAction;
+    private double animalFullnessOnStart;
 
     private Settings() {
     }
@@ -35,13 +40,14 @@ public class Settings {
         this.tickDurationInMilliseconds = 1000;
         this.gameFieldWidth = 100;
         this.gameFieldHeight = 20;
+        this.costOfAnimalAction = 0.1;          // from 0 to 1
+        this.animalFullnessOnStart = 0.75;      // from 0 to 1
         setDefaultGrassSettings();
         setDefaultAnimalSettings();
     }
 
     private static Set<Class<? extends Animal>> initAnimals() {
         Set<Class<? extends Animal>> set = new HashSet<>();
-        // todo: get classes from directory
         // predators
         set.add(Bear.class);
         set.add(Eagle.class);

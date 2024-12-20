@@ -1,4 +1,4 @@
-package org.example.organisms.animals.herbivore;
+package org.example.organisms.animals.omnivore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import org.example.settings.Settings;
 
 @Getter
 @Setter
-public class Caterpillar extends AbstractHerbivore {
+public class Duck extends AbstractOmnivore {
     @Getter
     private static AnimalSettings settings;
     @Getter
@@ -17,7 +17,7 @@ public class Caterpillar extends AbstractHerbivore {
     @Getter
     private static int maxSpeed;
 
-    public Caterpillar() {
+    public Duck() {
         this.isAlive = true;
         this.currentFullness = maxFullness * Settings.getInstance().getAnimalFullnessOnStart();
         this.weight = settings.getWeight();

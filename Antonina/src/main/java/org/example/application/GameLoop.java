@@ -1,14 +1,8 @@
 package org.example.application;
 
 import org.example.settings.Settings;
-import org.example.spawners.GrassSpawner;
-import org.example.spawners.initialSpawners.AnimalInitialSpawner;
-import org.example.spawners.initialSpawners.GrassInitialSpawner;
-import org.example.statistics.InitialStatistics;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class GameLoop implements Runnable {
     private final ApplicationContext context;
@@ -19,58 +13,46 @@ public class GameLoop implements Runnable {
 
     @Override
     public void run() {
-        initGrass();
-        initAnimals();
-        initStats();
-        spawnGrass();
-        initStats();
+        initial();
+        scheduled();
     }
 
-    private void initGrass(){
-        GrassInitialSpawner grassInitialSpawner = context.getGrassSpawner();
-        Thread initGrass = new Thread(grassInitialSpawner);
-        initGrass.start();
+    private void initial() {
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        Runnable grassInitialSpawner = context.getGrassInitialSpawner();
+        Runnable animalInitialSpawner = context.getAnimalInitialSpawner();
+        executor.submit(grassInitialSpawner);
+        executor.submit(animalInitialSpawner);
+
+        executor.shutdown();
         try {
-            initGrass.join();
+            while (!executor.awaitTermination(50, TimeUnit.MILLISECONDS)) {
+                System.out.println("Waiting for initialisation to complete...");
+            }
+            System.out.println("Initialisation completed.");
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            System.err.println("Initialisation interrupted");
+            executor.shutdownNow();
         }
+        context.getInitialStatistics().printStatistics();
     }
 
-    private void initAnimals(){
-        AnimalInitialSpawner animalInitialSpawner = context.getAnimalSpawner();
-        Thread initAnimal = new Thread(animalInitialSpawner);
-        initAnimal.start();
-        try {
-            initAnimal.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private void scheduled() {
+        ScheduledThreadPoolExecutor scheduler = new ScheduledThreadPoolExecutor(3);
+        Runnable grassSpawner = context.getGrassSpawner();
+        Runnable animalSpawner = context.getAnimalSpawner();
+        Runnable statistics = context.getStatistics();
 
-    private void initStats(){
-        InitialStatistics initialStatistics = context.getStatistics();
-        Thread initStats = new Thread(initialStatistics);
-        initStats.start();
-        try {
-            initStats.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
+        long gameTick = Settings.getInstance().getTickDurationInMilliseconds();
+        scheduler.scheduleAtFixedRate(grassSpawner, 0, gameTick, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(animalSpawner, 0, gameTick, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(statistics, 0, gameTick, TimeUnit.MILLISECONDS);
 
-    private void spawnGrass(){
-        GrassSpawner grassSpawner = new GrassSpawner();
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-        executorService.scheduleAtFixedRate(grassSpawner,
-                0, Settings.getInstance().getTickDurationInMilliseconds(), TimeUnit.MILLISECONDS);
-
-        // todo edit:
         try {
-            Thread.sleep(2000);
-            executorService.shutdown();
+            Thread.sleep(3000);
+            scheduler.shutdown();
             Thread.sleep(100);
-            System.out.println(executorService.isTerminated());
+            System.out.println("End of simulation: " + scheduler.isTerminated());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

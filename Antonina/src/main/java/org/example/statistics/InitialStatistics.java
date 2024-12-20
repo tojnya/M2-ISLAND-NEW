@@ -10,13 +10,8 @@ import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.Set;
 
-public class InitialStatistics implements Runnable, AbstractStatistics {
+public class InitialStatistics implements AbstractStatistics {
     private final GameField gameField = ApplicationContext.getInstance().getGameField();
-
-    @Override
-    public void run() {
-        printStatistics();
-    }
 
     public void printStatistics() {
         printGrass();
@@ -32,6 +27,7 @@ public class InitialStatistics implements Runnable, AbstractStatistics {
             }
             System.out.println();
         }
+        System.out.println("Total : " + gameField.getAllGrass());
     }
 
     private void printAnimals() {
@@ -39,18 +35,24 @@ public class InitialStatistics implements Runnable, AbstractStatistics {
         System.out.println("Animals:");
         for (int i = 0; i < gameField.getWidth(); i++) {
             for (int j = 0; j < gameField.getHeight(); j++) {
-                Map<Class<? extends Animal>, Set<? extends Animal>> map = cells[i][j].getAnimals();
+                Map<Class<? extends Animal>, Set<Animal>> map = cells[i][j].getAnimals();
                 System.out.print(cells[i][j].getX() + "_" + cells[i][j].getY() + ": ");
                 for (Class<? extends Animal> animalClass : map.keySet()) {
-                    System.out.print(getEmoji(animalClass) + " - ");
+                    System.out.print(getAnimalEmoji(animalClass) + " - ");
                     System.out.print(map.get(animalClass).size() + ", ");
                 }
                 System.out.println();
             }
         }
+        printTotal();
     }
 
-    private String getEmoji(Class<? extends Animal> animalClass) {
+    private void printTotal() {
+        System.out.println("Total:");
+        Statistics.printAnimals();
+    }
+
+    private String getAnimalEmoji(Class<? extends Animal> animalClass) {
         String emoji;
         try {
             Field field = animalClass.getDeclaredField("emoji");

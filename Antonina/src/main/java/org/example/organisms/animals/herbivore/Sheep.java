@@ -1,48 +1,35 @@
 package org.example.organisms.animals.herbivore;
 
 import lombok.Getter;
-import org.example.organisms.Organism;
+import lombok.Setter;
 import org.example.settings.AnimalSettings;
+import org.example.settings.Settings;
 
-import java.util.Map;
-
-public class Sheep extends Herbivore {
+@Getter
+@Setter
+public class Sheep extends AbstractHerbivore {
+    @Getter
+    private static AnimalSettings settings;
     @Getter
     private static String emoji;
-    @Getter
-    private static double weight;
     @Getter
     private static int maxPerCell;
     @Getter
     private static int maxSpeed;
-    @Getter
-    private static double maxFullness;
-    @Getter
-    private static Map<Class<? extends Organism>, Double> chanceOfHunt;
+
+    public Sheep() {
+        this.isAlive = true;
+        this.currentFullness = maxFullness * Settings.getInstance().getAnimalFullnessOnStart();
+        this.weight = settings.getWeight();
+        this.chanceOfHunt = settings.getChanceOfHunt();
+    }
 
     @Override
-    public void initSettings(AnimalSettings settings) {
+    public void initSettings(AnimalSettings animalSettings) {
+        settings = animalSettings;
         emoji = settings.getEmoji();
-        weight = settings.getWeight();
         maxPerCell = settings.getMaxPerCell();
         maxSpeed = settings.getMaxSpeed();
         maxFullness = settings.getMaxFullness();
-        chanceOfHunt = settings.getChanceOfHunt();
-    }
-
-    @Override
-    public void move() {
-    }
-
-    @Override
-    public void eat() {
-    }
-
-    @Override
-    public void reproduce() {
-    }
-
-    @Override
-    public void die() {
     }
 }
