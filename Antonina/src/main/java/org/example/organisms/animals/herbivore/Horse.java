@@ -17,11 +17,15 @@ public class Horse extends AbstractHerbivore {
     @Getter
     private static int maxSpeed;
 
+    public Horse(boolean settings) {
+    }
+
     public Horse() {
         this.isAlive = true;
         this.currentFullness = maxFullness * Settings.getInstance().getAnimalFullnessOnStart();
         this.weight = settings.getWeight();
         this.chanceOfHunt = settings.getChanceOfHunt();
+        this.maxFullness = settings.getMaxFullness();
     }
 
     @Override
@@ -30,6 +34,5 @@ public class Horse extends AbstractHerbivore {
         emoji = settings.getEmoji();
         maxPerCell = settings.getMaxPerCell();
         maxSpeed = settings.getMaxSpeed();
-        maxFullness = settings.getMaxFullness();
     }
 }

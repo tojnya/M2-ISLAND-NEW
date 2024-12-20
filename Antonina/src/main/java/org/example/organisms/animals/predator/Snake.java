@@ -17,11 +17,15 @@ public class Snake extends AbstractPredator {
     @Getter
     private static int maxSpeed;
 
+    public Snake(boolean settings) {
+    }
+
     public Snake() {
         this.isAlive = true;
         this.currentFullness = maxFullness * Settings.getInstance().getAnimalFullnessOnStart();
         this.weight = settings.getWeight();
         this.chanceOfHunt = settings.getChanceOfHunt();
+        this.maxFullness = settings.getMaxFullness();
     }
 
     @Override
@@ -30,6 +34,5 @@ public class Snake extends AbstractPredator {
         emoji = settings.getEmoji();
         maxPerCell = settings.getMaxPerCell();
         maxSpeed = settings.getMaxSpeed();
-        maxFullness = settings.getMaxFullness();
     }
 }

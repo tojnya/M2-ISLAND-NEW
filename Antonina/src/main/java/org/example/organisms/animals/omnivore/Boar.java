@@ -17,11 +17,15 @@ public class Boar extends AbstractOmnivore {
     @Getter
     private static int maxSpeed;
 
+    public Boar(boolean settings) {
+    }
+
     public Boar() {
         this.isAlive = true;
         this.currentFullness = maxFullness * Settings.getInstance().getAnimalFullnessOnStart();
         this.weight = settings.getWeight();
         this.chanceOfHunt = settings.getChanceOfHunt();
+        this.maxFullness = settings.getMaxFullness();
     }
 
     @Override
@@ -30,6 +34,5 @@ public class Boar extends AbstractOmnivore {
         emoji = settings.getEmoji();
         maxPerCell = settings.getMaxPerCell();
         maxSpeed = settings.getMaxSpeed();
-        maxFullness = settings.getMaxFullness();
     }
 }

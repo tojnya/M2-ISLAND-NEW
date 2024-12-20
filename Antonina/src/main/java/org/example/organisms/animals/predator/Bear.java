@@ -17,11 +17,15 @@ public class Bear extends AbstractPredator {
     @Getter
     private static int maxSpeed;
 
+    public Bear(boolean settings){
+    }
+
     public Bear() {
         this.isAlive = true;
         this.currentFullness = maxFullness * Settings.getInstance().getAnimalFullnessOnStart();
         this.weight = settings.getWeight();
         this.chanceOfHunt = settings.getChanceOfHunt();
+        this.maxFullness = settings.getMaxFullness();
     }
 
     @Override
@@ -30,6 +34,5 @@ public class Bear extends AbstractPredator {
         emoji = settings.getEmoji();
         maxPerCell = settings.getMaxPerCell();
         maxSpeed = settings.getMaxSpeed();
-        maxFullness = settings.getMaxFullness();
     }
 }

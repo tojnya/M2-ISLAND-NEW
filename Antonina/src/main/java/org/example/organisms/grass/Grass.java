@@ -3,10 +3,9 @@ package org.example.organisms.grass;
 import lombok.Getter;
 import org.example.organisms.Organism;
 import org.example.organisms.interfaces.GrassSettingsInterface;
-import org.example.organisms.interfaces.Mortal;
 import org.example.settings.GrassSettings;
 
-public class Grass extends Organism implements Mortal, GrassSettingsInterface {
+public class Grass extends Organism implements GrassSettingsInterface {
     @Getter
     private static String emoji;
     @Getter
@@ -19,9 +18,5 @@ public class Grass extends Organism implements Mortal, GrassSettingsInterface {
         emoji = settings.getEmoji();
         maxPerCell = settings.getMaxPerCell();
         weight = settings.getWeight();
-    }
-
-    @Override
-    public void die() {
     }
 }

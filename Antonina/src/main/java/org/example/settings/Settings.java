@@ -76,22 +76,22 @@ public class Settings {
 
     private void setDefaultAnimalSettings() {
         // predators
-        Bear settingsBear = new Bear();
-        Eagle settingsEagle = new Eagle();
-        Fox settingsFox = new Fox();
-        Snake settingsSnake = new Snake();
-        Wolf settingsWolf = new Wolf();
+        Bear settingsBear = new Bear(true);
+        Eagle settingsEagle = new Eagle(true);
+        Fox settingsFox = new Fox(true);
+        Snake settingsSnake = new Snake(true);
+        Wolf settingsWolf = new Wolf(true);
         // herbivores
-        Boar settingsBoar = new Boar();
-        Buffalo settingsBuffalo = new Buffalo();
-        Caterpillar settingsCaterpillar = new Caterpillar();
-        Deer settingsDeer = new Deer();
-        Duck settingsDuck = new Duck();
-        Goat settingsGoat = new Goat();
-        Horse settingsHorse = new Horse();
-        Mouse settingsMouse = new Mouse();
-        Rabbit settingsRabbit = new Rabbit();
-        Sheep settingsSheep = new Sheep();
+        Boar settingsBoar = new Boar(true);
+        Buffalo settingsBuffalo = new Buffalo(true);
+        Caterpillar settingsCaterpillar = new Caterpillar(true);
+        Deer settingsDeer = new Deer(true);
+        Duck settingsDuck = new Duck(true);
+        Goat settingsGoat = new Goat(true);
+        Horse settingsHorse = new Horse(true);
+        Mouse settingsMouse = new Mouse(true);
+        Rabbit settingsRabbit = new Rabbit(true);
+        Sheep settingsSheep = new Sheep(true);
 
 
         // predators
@@ -147,45 +147,28 @@ public class Settings {
                 new HashMap<>() {{
                     put(Mouse.class, 0.5);
                     put(Caterpillar.class, 0.9);
-                    put(Grass.class, 1.0);
                 }}));
         settingsBuffalo.initSettings(new AnimalSettings("\uD83D\uDC03", 700.0, 10, 3, 100.0,
-                new HashMap<>() {{
-                    put(Grass.class, 1.0);
-                }}));
+                new HashMap<>()));
         settingsCaterpillar.initSettings(new AnimalSettings("\uD83D\uDC1B", 0.01, 1000, 0, 0,
-                new HashMap<>() {{
-                    put(Grass.class, 1.0);
-                }}));
+                new HashMap<>()));
         settingsDeer.initSettings(new AnimalSettings("\uD83E\uDD8C", 300.0, 20, 4, 50.0,
-                new HashMap<>() {{
-                    put(Grass.class, 1.0);
-                }}));
+                new HashMap<>()));
         settingsDuck.initSettings(new AnimalSettings("\uD83E\uDD86", 1.0, 200, 4, 0.15,
                 new HashMap<>() {{
                     put(Caterpillar.class, 0.9);
-                    put(Grass.class, 1.0);
                 }}));
         settingsGoat.initSettings(new AnimalSettings("\uD83D\uDC10", 60.0, 140, 3, 10.0,
-                new HashMap<>() {{
-                    put(Grass.class, 1.0);
-                }}));
+                new HashMap<>()));
         settingsHorse.initSettings(new AnimalSettings("\uD83D\uDC0E", 400.0, 20, 4, 60.0,
-                new HashMap<>() {{
-                    put(Grass.class, 1.0);
-                }}));
+                new HashMap<>()));
         settingsMouse.initSettings(new AnimalSettings("\uD83D\uDC01", 0.05, 500, 1, 0.01,
                 new HashMap<>() {{
                     put(Caterpillar.class, 0.9);
-                    put(Grass.class, 1.0);
                 }}));
         settingsRabbit.initSettings(new AnimalSettings("\uD83D\uDC07", 2.0, 150, 2, 0.45,
-                new HashMap<>() {{
-                    put(Grass.class, 1.0);
-                }}));
+                new HashMap<>()));
         settingsSheep.initSettings(new AnimalSettings("\uD83D\uDC11", 70.0, 140, 3, 15.0,
-                new HashMap<>() {{
-                    put(Grass.class, 1.0);
-                }}));
+                new HashMap<>()));
     }
 }

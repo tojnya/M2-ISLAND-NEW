@@ -4,9 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.gamefield.GameField;
 import org.example.organisms.Organism;
-import org.example.organisms.animals.herbivore.Herbivore;
-import org.example.organisms.animals.omnivore.Omnivore;
-import org.example.organisms.animals.predator.Predator;
 import org.example.organisms.interfaces.*;
 import org.example.settings.Settings;
 
@@ -21,7 +18,7 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
     public double currentFullness;
     public double weight;
     public boolean isAlive;
-    public Map<Class<? extends Organism>, Double> chanceOfHunt;
+    public Map<Class<? extends Animal>, Double> chanceOfHunt;
     public double maxFullness;
 
     public void assignCoordinates(int x, int y) {
@@ -29,14 +26,8 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
         this.yCoordinate = y;
     }
 
-    @Override
     public void eat() {
-        switch (this) {
-            case Predator predator -> predator.eatAnimal();
-            case Herbivore herbivore -> herbivore.eatGrass();
-            case Omnivore omnivore -> omnivore.eatAnything();
-            default -> throw new IllegalStateException("Unexpected value: " + this);
-        }
+        loseFullness();
     }
 
     @Override
@@ -47,7 +38,7 @@ public abstract class Animal extends Organism implements Movable, Reproducible, 
 
     @Override
     public void reproduce() {
-        // reproduce();
+        // reproduce
         loseFullness();
     }
 

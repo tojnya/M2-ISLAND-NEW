@@ -2,7 +2,7 @@ package org.example.settings;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.organisms.Organism;
+import org.example.organisms.animals.Animal;
 
 import java.util.Map;
 
@@ -14,10 +14,10 @@ public class AnimalSettings {
     private int maxPerCell;
     private int maxSpeed;
     private double maxFullness;
-    private Map<Class<? extends Organism>, Double> chanceOfHunt;
+    private Map<Class<? extends Animal>, Double> chanceOfHunt;
 
     public AnimalSettings(String emoji, double weight, int maxPerCell, int maxSpeed, double maxFullness,
-                          Map<Class<? extends Organism>, Double> chanceOfHunt) {
+                          Map<Class<? extends Animal>, Double> chanceOfHunt) {
         this.emoji = emoji;
         this.weight = weight;
         this.maxPerCell = maxPerCell;
